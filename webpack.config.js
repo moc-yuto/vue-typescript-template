@@ -39,7 +39,7 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            "ts":'ts-loader',
+            "ts":'ts-loader!tslint-loader',
             // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
             // the "scss" and "sass" values for the lang attribute to the right configs here.
             // other preprocessors should work out of the box, no loader config like this necessary.
@@ -58,12 +58,17 @@ module.exports = {
         }
       },
       {
-        test: /\.ts$/,
-        loader: 'ts-loader',
+        test: /\.tsx?$/,
         exclude: '/node_modules/',
-        options: {
-          appendTsSuffixTo: [/\.vue$/]
-        }
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              appendTsSuffixTo: [/\.vue$/]
+            }
+          },
+          'tslint-loader'
+        ]
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -78,7 +83,7 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['*', 'ts', '.js', '.vue', '.json']
+    extensions: ['*', '.ts', '.js', '.vue', '.json']
   },
   devServer: {
     historyApiFallback: true,

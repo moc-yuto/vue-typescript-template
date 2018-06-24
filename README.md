@@ -1,4 +1,4 @@
-# hello-simple
+# vue-typescript-template
 
 > A Vue.js project
 
